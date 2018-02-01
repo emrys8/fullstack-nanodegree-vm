@@ -21,7 +21,6 @@ def getRestaurantData():
     all_restaurants = session.query(Restaurant).all()
     return all_restaurants
 
-
 class webServerHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -38,24 +37,31 @@ class webServerHandler(BaseHTTPRequestHandler):
 
                 for restaurant in all_restaurants:
                     output += "<p>" + restaurant.name + "</p>"
+                    output += "<p><a href='#'>Edit</a></p>"
+                    output += "<p><a href='#'>Delete</a></p>"
                 
+                # a link to create new restaurants
+                output += "<p><a href='/restaurants/create' target='_blank'>Make a New Restaurant Here</a></p>"
                 output += "</body></html>"
                 self.wfile.write(output)
                 print output
                 return
 
-            if self.path.endswith("/hola"):
+            if self.path.endswith("/restaurants/create"):
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
                 output = ""
                 output += "<html><body>"
-                output += "<h1>&#161 Hola !</h1>"
-                output += '''<form method='POST' enctype='multipart/form-data' action='/hello'><h2>What would you like me to say?</h2><input name="message" type="text" ><input type="submit" value="Submit"> </form>'''
+                output += "<h1>Make A New Restaurant</h1>"
+                output += '''<form method='POST' enctype='multipart/form-data' action='/hello'><div>
+                <input type='text' name='restaurant_name' placeholder='New Restaurant Name'><input type='submit' value='Create'>
+                </div></form>'''
                 output += "</body></html>"
                 self.wfile.write(output)
                 print output
                 return
+            
 
         except IOError:
             self.send_error(404, 'File Not Found: %s' % self.path)
