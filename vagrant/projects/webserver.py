@@ -49,8 +49,8 @@ class webServerHandler(BaseHTTPRequestHandler):
                 
                 for restaurant in all_restaurants:
                     output += "<h3>" + restaurant.name + "</h3>"
-                    output += "<p><a href='%s/edit'>Edit</a></p>" % restaurant.id
-                    output += "<p><a href='%s/delete'>Delete</a></p>" % restaurant.id
+                    output += "<p><a href='/restaurants/%s/edit'>Edit</a></p>" % restaurant.id
+                    output += "<p><a href='/restaurants/%s/delete'>Delete</a></p>" % restaurant.id
 
                 output += "<p><a href='/restaurants/create' target='_blank'>Make a New Restaurant Here</a></p>"
                 output += "</body></html>"
@@ -92,7 +92,7 @@ class webServerHandler(BaseHTTPRequestHandler):
                 # populate page & form with details of the restaurant
                 output += "<h1>%s</h1>" % restaurant.name
                 output += '''<form method='POST' enctype='multipart/form-data'
-                action = '/%s/edit'><div>
+                action = '/restaurants/%s/edit'><div>
                 <input type='text' name='restaurant_name' placeholder='%s'>
                 <input type='submit' value='Rename'>
                 </div></form>''' % (restaurant.id, restaurant.name)
@@ -113,7 +113,7 @@ class webServerHandler(BaseHTTPRequestHandler):
                 restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
 
                 output += "<h2>Are you sure you want to delete %s</h2>" % restaurant.name
-                output += "<form method='POST' action='/%s/delete' enctype='multipart/form-data'><div>\
+                output += "<form method='POST' action='/restaurants/%s/delete' enctype='multipart/form-data'><div>\
                 <input type='hidden' name='restaurant_name' value=%s><input type='submit' value='Delete'></div></form>" % (restaurant.id, restaurant.id)
                 output += "</body></html>"
                 self.wfile.write(output)
@@ -141,7 +141,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 
                     self.send_response(301)
                     self.send_header('Content-type', 'text/html')
-                    self.send_header('Location', 'restaurants')
+                    self.send_header('Location', '/restaurants')
                     self.end_headers()
                     self.wfile.write(output)
                     # print output
