@@ -79,6 +79,7 @@ class webServerHandler(BaseHTTPRequestHandler):
                 return
 
             if self.path.endswith("/edit"):
+                
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
@@ -95,7 +96,7 @@ class webServerHandler(BaseHTTPRequestHandler):
                 # populate page & form with details of the restaurant
                 output += "<h1>%s</h1>" % restaurant.name
                 output += '''<form method='POST' enctype='multipart/form-data'
-                action = '%s/edit'><div>
+                action = '/%s/edit'><div>
                 <input type='text' name='restaurant_name' placeholder='%s'>
                 <input type='submit' value='Rename'>
                 </div></form>''' % (restaurant.id, restaurant.name)
@@ -129,22 +130,26 @@ class webServerHandler(BaseHTTPRequestHandler):
                     session.add(newRestaurant)
                     session.commit()
                 
-                output = ""
-                styles = get_general_styles()
-                output += "<html><head><style>%s</style></head><body>" % styles
-                output += "<hr><h1>A new restaurant with the name: %s has been created successfully</h1><hr>" % newRestaurant.name
-                output += "</body></html>"
-                self.wfile.write(output)
-                # print output
-                return
+                    output = ""
+                    styles = get_general_styles()
+                    output += "<html><head><style>%s</style></head><body>" % styles
+                    output += "<hr><h2>A new restaurant with the name: %s has been created successfully</h2><hr>" % newRestaurant.name
+                    output += "</body></html>"
+                    self.wfile.write(output)
+                    # print output
+                    return
 
             if self.path.endswith("/edit"):
+                print ('got to this point...')
                 self.send_response(200)
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
+
                 ctype, pdict = cgi.parse_header(
-                    self.headers, getheader('content-type'))
+                    self.headers.getheader('content-type'))
+                
                 if ctype == 'multipart/form-data':
+
                     fields = cgi.parse_multipart(self.rfile, pdict)
                     messagecontent = fields.get('restaurant_name')
 
@@ -154,14 +159,22 @@ class webServerHandler(BaseHTTPRequestHandler):
                     # get the restaurant with the given id
                     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
 
+                    old_name = restaurant.name
+
                     # update restaurant name
                     restaurant.name = messagecontent[0]
 
                     session.add(restaurant)
                     session.commit()
 
-
-                    
+                    output = ""
+                    styles = get_general_styles()
+                    output += "<html><head><style>%s</style></head><body>" % styles
+                    output += "<h2>%s has been successfully renamed to %s</h2>" % (old_name, restaurant.name)
+                    output += "</body></html>"
+                    self.wfile.write(output)
+                    print (output)
+                    return
                 
         except:
             pass
