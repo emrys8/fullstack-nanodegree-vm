@@ -95,10 +95,10 @@ class webServerHandler(BaseHTTPRequestHandler):
                 # populate page & form with details of the restaurant
                 output += "<h1>%s</h1>" % restaurant.name
                 output += '''<form method='POST' enctype='multipart/form-data'
-                action = '/'><div>
+                action = '%s/edit'><div>
                 <input type='text' name='restaurant_name' placeholder='%s'>
                 <input type='submit' value='Rename'>
-                </div></form>''' % restaurant.name
+                </div></form>''' % (restaurant.id, restaurant.name)
                 output += "</body></html>"
                 self.wfile.write(output)
                 print output
@@ -148,7 +148,19 @@ class webServerHandler(BaseHTTPRequestHandler):
                     fields = cgi.parse_multipart(self.rfile, pdict)
                     messagecontent = fields.get('restaurant_name')
 
-                    # get the restaurant with the id
+                    # get the id of the restaurant
+                    restaurant_id = get_restaurant_id(self.path)
+                    
+                    # get the restaurant with the given id
+                    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+
+                    # update restaurant name
+                    restaurant.name = messagecontent[0]
+
+                    session.add(restaurant)
+                    session.commit()
+
+
                     
                 
         except:
