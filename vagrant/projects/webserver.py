@@ -18,10 +18,6 @@ DBSession = sessionmaker(bind=engine)
 
 session = DBSession()
 
-def getRestaurantData():
-    all_restaurants = session.query(Restaurant).all()
-    return all_restaurants
-
 def get_general_styles():
     return '\
     html { font-family: Helvetica, Arial, sans-serif; } \
@@ -41,21 +37,21 @@ class webServerHandler(BaseHTTPRequestHandler):
     def do_GET(self):
         try:
             if self.path.endswith("/restaurants"):
+                all_restaurants = session.query(Restaurant).all()
                 self.send_response(200)
-                self.send_header('Content-type', 'text/html')
+                self.send_header('Contype-type', 'text/html')
                 self.end_headers()
+
                 output = ""
                 styles = get_general_styles()
                 output += "<html><head><style>%s</style></head><body>" % styles
                 output += "<h1>Restaurants</h1>"
-                all_restaurants = getRestaurantData()
-
+                
                 for restaurant in all_restaurants:
                     output += "<h3>" + restaurant.name + "</h3>"
                     output += "<p><a href='%s/edit'>Edit</a></p>" % restaurant.id
                     output += "<p><a href='%s/delete'>Delete</a></p>" % restaurant.id
-                
-                # a link to create new restaurants
+
                 output += "<p><a href='/restaurants/create' target='_blank'>Make a New Restaurant Here</a></p>"
                 output += "</body></html>"
                 self.wfile.write(output)
@@ -131,9 +127,6 @@ class webServerHandler(BaseHTTPRequestHandler):
 
         try:
             if self.path.endswith("/restaurants/create"):
-                self.send_response(301)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
                 ctype, pdict = cgi.parse_header(
                     self.headers.getheader('content-type'))
                 # print (ctype)
@@ -145,22 +138,16 @@ class webServerHandler(BaseHTTPRequestHandler):
                     newRestaurant = Restaurant(name = messagecontent[0])
                     session.add(newRestaurant)
                     session.commit()
-                
-                    output = ""
-                    styles = get_general_styles()
-                    output += "<html><head><style>%s</style></head><body>" % styles
-                    output += "<hr><h2>A new restaurant with the name: %s has been created successfully</h2><hr>" % newRestaurant.name
-                    output += "</body></html>"
+
+                    self.send_response(301)
+                    self.send_header('Content-type', 'text/html')
+                    self.send_header('Location', 'restaurants')
+                    self.end_headers()
                     self.wfile.write(output)
                     # print output
                     return
 
             if self.path.endswith("/edit"):
-                
-                self.send_response(301)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
-
                 ctype, pdict = cgi.parse_header(
                     self.headers.getheader('content-type'))
                 
@@ -183,20 +170,14 @@ class webServerHandler(BaseHTTPRequestHandler):
                     session.add(restaurant)
                     session.commit()
 
-                    output = ""
-                    styles = get_general_styles()
-                    output += "<html><head><style>%s</style></head><body>" % styles
-                    output += "<h2>%s has been successfully renamed to %s</h2>" % (old_name, restaurant.name)
-                    output += "</body></html>"
-                    self.wfile.write(output)
-                    print (output)
+                    self.send_response(301)
+                    self.send_header('Content-type', 'text/html')
+                    self.send_header('Location', '/restaurants')
+
+                    self.end_headers()
                     return
             
             if self.path.endswith("/delete"):
-
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
 
                 ctype, pdict = cgi.parse_header(
                     self.headers.getheader('content-type'))
@@ -213,6 +194,11 @@ class webServerHandler(BaseHTTPRequestHandler):
                     
                     session.delete(restaurant)
                     session.commit()
+
+                    self.send_response(301)
+                    self.send_header('Content-type', 'text/html')
+                    self.send_header('Location', '/restaurants')
+                    self.end_headers()
         except:
             pass
 
