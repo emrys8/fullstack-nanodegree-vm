@@ -75,19 +75,19 @@ class webServerHandler(BaseHTTPRequestHandler):
                 return
 
             if self.path.endswith("/edit"):
-                
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
-                output = ""
-                styles = get_general_styles()
-                output += "<html><head><style>%s</style><body>" % styles
                 # get the the id from the url
                 
                 restaurant_id = get_restaurant_id(self.path)
 
                 # get the restaurant with the given id
                 restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+
+                styles = get_general_styles()
+                output = "<html><head><style>%s</style><body>" % styles
 
                 # populate page & form with details of the restaurant
                 output += "<h1>%s</h1>" % restaurant.name
@@ -102,9 +102,6 @@ class webServerHandler(BaseHTTPRequestHandler):
                 return
             
             if self.path.endswith("/delete"):
-                self.send_response(200)
-                self.send_header('Content-type', 'text/html')
-                self.end_headers()
                 output = ""
                 styles = get_general_styles()
                 output += "<html><head><style>%s</style><body>" % styles
@@ -112,12 +109,15 @@ class webServerHandler(BaseHTTPRequestHandler):
                 restaurant_id = get_restaurant_id(self.path)
                 restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
 
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+
                 output += "<h2>Are you sure you want to delete %s</h2>" % restaurant.name
                 output += "<form method='POST' action='/restaurants/%s/delete' enctype='multipart/form-data'><div>\
                 <input type='hidden' name='restaurant_name' value=%s><input type='submit' value='Delete'></div></form>" % (restaurant.id, restaurant.id)
                 output += "</body></html>"
                 self.wfile.write(output)
-                print output
                 return
 
         except IOError:
@@ -188,7 +188,6 @@ class webServerHandler(BaseHTTPRequestHandler):
 
                     # get the restaurant and delete
                     restaurant_id = messagecontent[0]
-                    print (restaurant_id)
 
                     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
                     
@@ -199,6 +198,8 @@ class webServerHandler(BaseHTTPRequestHandler):
                     self.send_header('Content-type', 'text/html')
                     self.send_header('Location', '/restaurants')
                     self.end_headers()
+
+                    return
         except:
             pass
 
