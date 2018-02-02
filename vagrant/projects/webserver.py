@@ -31,6 +31,11 @@ def get_general_styles():
     form input[type=text] { width: 300px } \
     '
 
+def get_restaurant_id(path):
+    num_regexp = re.compile(r'\d+')
+    restaurant_id = re.search(num_regexp, path).group(0)
+    return restaurant_id
+
 class webServerHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -81,8 +86,8 @@ class webServerHandler(BaseHTTPRequestHandler):
                 styles = get_general_styles()
                 output += "<html><head><style>%s</style><body>" % styles
                 # get the the id from the url
-                num_regexp = re.compile(r'\d+')
-                restaurant_id = re.search(num_regexp, self.path).group(0)
+                
+                restaurant_id = get_restaurant_id(self.path)
 
                 # get the restaurant with the given id
                 restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
@@ -114,7 +119,7 @@ class webServerHandler(BaseHTTPRequestHandler):
                 self.end_headers()
                 ctype, pdict = cgi.parse_header(
                     self.headers.getheader('content-type'))
-                print (ctype)
+                # print (ctype)
                 if ctype == 'multipart/form-data':
                     fields = cgi.parse_multipart(self.rfile, pdict)
                     messagecontent = fields.get('restaurant_name')
@@ -132,6 +137,18 @@ class webServerHandler(BaseHTTPRequestHandler):
                 self.wfile.write(output)
                 # print output
                 return
+
+            if self.path.endswith("/edit"):
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+                ctype, pdict = cgi.parse_header(
+                    self.headers, getheader('content-type'))
+                if ctype == 'multipart/form-data':
+                    fields = cgi.parse_multipart(self.rfile, pdict)
+                    messagecontent = fields.get('restaurant_name')
+
+                    # get the restaurant with the id
                     
                 
         except:
