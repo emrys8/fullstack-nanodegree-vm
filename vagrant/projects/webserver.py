@@ -96,6 +96,14 @@ class webServerHandler(BaseHTTPRequestHandler):
                     newRestaurant = Restaurant(name = messagecontent[0])
                     session.add(newRestaurant)
                     session.commit()
+                
+                output = ""
+                styles = get_general_styles()
+                output += "<html><head><style>%s</style></head><body>" % styles
+                output += "<hr><h1>A new restaurant with the name: %s has been created successfully</h1><hr>" % newRestaurant.name
+                output += "</body></html>"
+                self.wfile.write(output)
+                # print output
                     
                 
         except:
