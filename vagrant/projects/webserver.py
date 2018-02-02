@@ -28,6 +28,15 @@ def get_general_styles():
     '
 
 def get_restaurant_id(path):
+    """[summary]
+    
+    Arguments:
+        path {[str]} -- [string path]
+    
+    Returns:
+        [str] -- [the extracted number from the path]
+    """
+
     num_regexp = re.compile(r'\d+')
     restaurant_id = re.search(num_regexp, path).group(0)
     return restaurant_id
