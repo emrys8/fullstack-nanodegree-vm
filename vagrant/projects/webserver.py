@@ -1,5 +1,6 @@
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import cgi
+import re
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
@@ -46,7 +47,7 @@ class webServerHandler(BaseHTTPRequestHandler):
 
                 for restaurant in all_restaurants:
                     output += "<h3>" + restaurant.name + "</h3>"
-                    output += "<p><a href='#'>Edit</a></p>"
+                    output += "<p><a href='%s/edit'>Edit</a></p>" % restaurant.id
                     output += "<p><a href='#'>Delete</a></p>"
                 
                 # a link to create new restaurants
@@ -71,7 +72,33 @@ class webServerHandler(BaseHTTPRequestHandler):
                 self.wfile.write(output)
                 print output
                 return
-            
+
+            if self.path.endswith("/edit"):
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+                output = ""
+                styles = get_general_styles()
+                output += "<html><head><style>%s</style><body>" % styles
+                # get the the id from the url
+                num_regexp = re.compile(r'\d+')
+                restaurant_id = re.search(num_regexp, self.path).group(0)
+
+                # get the restaurant with the given id
+                restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+
+                # populate page & form with details of the restaurant
+                output += "<h1>%s</h1>" % restaurant.name
+                output += '''<form method='POST' enctype='multipart/form-data'
+                action = '/'><div>
+                <input type='text' name='restaurant_name' placeholder='%s'>
+                <input type='submit' value='Rename'>
+                </div></form>''' % restaurant.name
+                output += "</body></html>"
+                self.wfile.write(output)
+                print output
+                return
+
 
         except IOError:
             self.send_error(404, 'File Not Found: %s' % self.path)
@@ -104,6 +131,7 @@ class webServerHandler(BaseHTTPRequestHandler):
                 output += "</body></html>"
                 self.wfile.write(output)
                 # print output
+                return
                     
                 
         except:
