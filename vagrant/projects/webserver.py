@@ -21,6 +21,15 @@ def getRestaurantData():
     all_restaurants = session.query(Restaurant).all()
     return all_restaurants
 
+def get_general_styles():
+    return '\
+    html { font-family: Helvetica, Arial, sans-serif; } \
+    body { width: 70% } \
+    a { color: #1187b2; } a:link, a:visited { a:color: ##1187b2; } \
+    form input { padding: 0.8em 0.5em; margin-right: 10px; font-size: 1em } \
+    form input[type=text] { width: 300px } \
+    '
+
 class webServerHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
@@ -30,13 +39,13 @@ class webServerHandler(BaseHTTPRequestHandler):
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
                 output = ""
-                html = 'html { font-family: Helvetica, Arial, sans-serif; }'
-                output += "<html><head><style>%s</style></head><body>" % html
+                styles = get_general_styles()
+                output += "<html><head><style>%s</style></head><body>" % styles
                 output += "<h1>Restaurants</h1>"
                 all_restaurants = getRestaurantData()
 
                 for restaurant in all_restaurants:
-                    output += "<p>" + restaurant.name + "</p>"
+                    output += "<h3>" + restaurant.name + "</h3>"
                     output += "<p><a href='#'>Edit</a></p>"
                     output += "<p><a href='#'>Delete</a></p>"
                 
@@ -52,9 +61,10 @@ class webServerHandler(BaseHTTPRequestHandler):
                 self.send_header('Content-type', 'text/html')
                 self.end_headers()
                 output = ""
-                output += "<html><body>"
+                styles = get_general_styles()
+                output += "<html><head><style>%s</style></head><body>" % styles
                 output += "<h1>Make A New Restaurant</h1>"
-                output += '''<form method='POST' enctype='multipart/form-data' action='/hello'><div>
+                output += '''<form method='POST' enctype='multipart/form-data' action='/restaurants/create'><div>
                 <input type='text' name='restaurant_name' placeholder='New Restaurant Name'><input type='submit' value='Create'>
                 </div></form>'''
                 output += "</body></html>"
@@ -67,26 +77,29 @@ class webServerHandler(BaseHTTPRequestHandler):
             self.send_error(404, 'File Not Found: %s' % self.path)
 
     def do_POST(self):
+
+        print (self.path)
+
         try:
-            self.send_response(301)
-            self.send_header('Content-type', 'text/html')
-            self.end_headers()
-            ctype, pdict = cgi.parse_header(
-                self.headers.getheader('content-type'))
-            if ctype == 'multipart/form-data':
-                fields = cgi.parse_multipart(self.rfile, pdict)
-                messagecontent = fields.get('message')
-            output = ""
-            output += "<html><body>"
-            output += " <h2> Okay, how about this: </h2>"
-            output += "<h1> %s </h1>" % messagecontent[0]
-            output += '''<form method='POST' enctype='multipart/form-data' action='/hello'><h2>What would you like me to say?</h2><input name="message" type="text" ><input type="submit" value="Submit"> </form>'''
-            output += "</body></html>"
-            self.wfile.write(output)
-            print output
+            if self.path.endswith("/restaurants/create"):
+                self.send_response(200)
+                self.send_header('Content-type', 'text/html')
+                self.end_headers()
+                ctype, pdict = cgi.parse_header(
+                    self.headers.getheader('content-type'))
+                print (ctype)
+                if ctype == 'multipart/form-data':
+                    fields = cgi.parse_multipart(self.rfile, pdict)
+                    messagecontent = fields.get('restaurant_name')
+                    # print (messagecontent)
+                    # create a new Restaurant
+                    newRestaurant = Restaurant(name = messagecontent[0])
+                    session.add(newRestaurant)
+                    session.commit()
+                    
+                
         except:
             pass
-
 
 def main():
     try:
