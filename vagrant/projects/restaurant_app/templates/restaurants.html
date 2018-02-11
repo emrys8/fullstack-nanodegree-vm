@@ -24,7 +24,7 @@
             {% if restaurants %}
               <ul>
                   {% for restaurant in restaurants %}
-                    <li>{{ restaurant.name }}</li>
+                    <li><a href="{{ url_for('showMenu', restaurant_id = restaurant.id ) }}">{{ restaurant.name }}</a></li>
                   {% endfor %}
               </ul>
             {% else %}
@@ -33,7 +33,7 @@
         </section>
 
         <div>
-            <a href="#">Create a New Restaurant</a>
+            <a href="{{ url_for('newRestaurant') }}">Create a New Restaurant</a>
         </div>
     </body>
 </html>

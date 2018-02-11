@@ -13,9 +13,9 @@
             </ul>
         </nav>
         <section>
-            <h2>Make a New Menu Item</h2>
+            <h2>Make a New Restaurant</h2>
             <div>
-                <form action="#">
+                <form action="{{ url_for('newRestaurant')}}" method="POST">
                     <div>
                         <label for="name">Restaurant Name</label>
                         <input type="text" id="name" name="name" placeholder="Enter a restaurant name">
