@@ -52,3 +52,8 @@
 
 ==================== ADDING ROUTES ======================
 - adding routes
+
+
+==================== CRUD OPERATIONS ======================
+1. setup database
+2. perform crud operations from the server app and the database
