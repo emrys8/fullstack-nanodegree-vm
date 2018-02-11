@@ -13,5 +13,48 @@
                 <li><a href="#">Create Restaurant</a></li>
             </ul>
         </nav>
+
+        <section>
+            <h2>Edit {{ }}</h2>
+            <form>
+                <div>
+                    <label for="menu_name">Name</label>
+                    <input type="text" id="menu_name" name="name" placeholder="Menu Item name" value={{ menu.name }}>
+                </div>
+                
+                <div>
+                    <label for="menu_price">Price</label>
+                    <input type="text" id="menu_price" name="price" placeholder="Menu item price" 
+                    value={{ menu.price }}>
+                </div>
+                
+                <div>
+                    <label for="menu_course">Course</label>
+                    {% if courses %} 
+                    {% for course in courses %}
+                      <br>
+                      {% if course == {{ menu.course }} %}
+                        <!-- pre-select the course of this particular menu item -->
+                        <input type="radio" id="menu_course" name="course" value={{ course }} checked> {{ course }}
+                      {% endif %}
+
+                        <input type="radio" id="menu_course" name="course" value={{ course }} checked> {{ course }}
+                    {% endfor %} 
+                    {% else %}
+                      <input type="text" id="menu_course" name="course" placeholder="Menu Course"> 
+                    {% endif %}
+                </div>
+                
+                <div>
+                    <label for="menu_desc">Description</label>
+                    <textarea style="width: 200px; height: 50px">{{ menu.description }}</textarea>
+                </div>
+                
+                <div>
+                    <button type="submit">Edit</button>
+                    <a href="#">Cancel</a>
+                </div>
+            </form>
+        </section>
     </body>
 </html>
