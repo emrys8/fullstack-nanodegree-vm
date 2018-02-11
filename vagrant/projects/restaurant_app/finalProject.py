@@ -1,4 +1,16 @@
 from flask import Flask, render_template
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy import create_engine
+
+from database_setup import Base, Restaurant, MenuItem
+
+# set up database and bind to it
+engine = create_engine('sqlite:///restaurant_menu.db')
+Base.metadata.bind = engine
+
+DBSession = sessionmaker(bind=engine)
+session = DBSession()
+
 from mockData import get_mock_restaurant_data, get_single_mock_restaurant_data,\
                      get_mock_menu_items_data, get_single_mock_menu_item_data
 app = Flask(__name__)
