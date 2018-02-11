@@ -38,9 +38,16 @@
                     <input type="text" id="menu_price" name="price" placeholder="Menu item price">
                 </div>
 
-                <div>
+                <div> 
                     <label for="menu_course">Course</label>
-                    <input type="text" id="menu_course" name="course" placeholder="Menu Course">
+                    {% if courses %}
+                      {% for course in courses %}
+                       <br>
+                       <input type="radio" id="menu_course" name="course" value={{ course }}> {{ course }}
+                      {% endfor %}
+                    {% else %}
+                       <input type="text" id="menu_course" name="course" placeholder="Menu Course">
+                    {% endif %}
                 </div>
 
                 <div>

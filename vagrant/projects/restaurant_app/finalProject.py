@@ -69,8 +69,12 @@ def newMenuItem(restaurant_id):
     #         selected_restaurant = restaurant
 
 
-    # get all menu item courses and store it in a list
-    courses = [r.get('course') for r in restaurants]
+    # we need unique set of menu item courses so we use set comprehension
+    courses = set(item.get('course') for item in items)
+    courses = list(courses) # converting the set to a list so we can sort it.
+    courses.sort()
+
+    print (courses)
     
     return render_template('newMenuItem.html', restaurants = restaurants, courses = courses)
 
