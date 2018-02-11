@@ -3,9 +3,11 @@ from mockData import get_mock_restaurant_data, get_single_mock_restaurant_data,\
                      get_mock_menu_items_data, get_single_mock_menu_item_data
 app = Flask(__name__)
 
+# restaurant mock data
 restaurant = get_single_mock_restaurant_data()
 restaurants = get_mock_restaurant_data()
 
+# menu items mock data
 items = get_mock_menu_items_data()
 item = get_single_mock_menu_item_data()
 
