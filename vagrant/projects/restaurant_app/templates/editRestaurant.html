@@ -36,8 +36,8 @@
                   <a href="#">Cancel</a>
               </div>
 
-              {% elif error %}
-                <p>{{ error }}</p>
+              {% else %}
+                <p>No such restaurant</p>
                 <p><a href="{{ url_for('newRestaurant') }}">Make a New Restaurant</a></p>
               {% endif %}
         </section>
