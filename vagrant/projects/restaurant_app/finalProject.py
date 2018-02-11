@@ -11,6 +11,14 @@ restaurants = [{'name': 'The CRUDdy Crab', 'id': '1'}, {'name':'Blue Burgers', '
 items = [ {'name':'Cheese Pizza', 'description':'made with fresh cheese', 'price':'$5.99','course' :'Entree', 'id':'1'}, {'name':'Chocolate Cake','description':'made with Dutch Chocolate', 'price':'$3.99', 'course':'Dessert','id':'2'},{'name':'Caesar Salad', 'description':'with fresh organic vegetables','price':'$5.99', 'course':'Entree','id':'3'},{'name':'Iced Tea', 'description':'with lemon','price':'$.99', 'course':'Beverage','id':'4'},{'name':'Spinach Dip', 'description':'creamy dip with fresh spinach','price':'$1.99', 'course':'Appetizer','id':'5'} ]
 item =  {'name':'Cheese Pizza','description':'made with fresh cheese','price':'$5.99','course' :'Entree'}
 
+
+def getCourses(items):
+    courses = set(item.get('course') for item in items) # we need a unique set of menu item courses
+    courses = list(courses)  # converting the set to a list so we can sort it.
+    courses.sort()
+
+    return courses
+
 @app.route('/')
 @app.route('/restaurants/')
 def showRestaurants():
@@ -22,7 +30,6 @@ def newRestaurant():
 
 @app.route('/restaurant/<int:restaurant_id>/edit/')
 def editRestaurant(restaurant_id):
-    # find the restaurant with the given id in the url
     selected_restaurant = None
     error = None
     for restaurant in restaurants:
@@ -49,11 +56,6 @@ def deleteRestaurant(restaurant_id):
 def showMenu(restaurant_id):
     # get the menu items for the restaurant with the given id
     selected_item = selected_restaurant = None
-
-    # for restaurant in restaurants:
-    #     if (restaurant['id'] == restaurant_id):
-    #         selected_restaurant = restaurant
-
     for item in items:
         if (int(item['id']) == restaurant_id):
             selected_item = item
@@ -63,34 +65,19 @@ def showMenu(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/menu/new/')
 def newMenuItem(restaurant_id):
     # return "This page is for making a new menu item for restaurant %s" % restaurant_id
-    # selected_restaurant = None
-    # for restaurant in restaurants:
-    #     if (restaurant.get(restaurant_id) == str(restaurant_id)):
-    #         selected_restaurant = restaurant
-
-
-    # we need unique set of menu item courses so we use set comprehension
-    courses = set(item.get('course') for item in items)
-    courses = list(courses) # converting the set to a list so we can sort it.
-    courses.sort()
-    
+    courses = getCourses(items)
     return render_template('newMenuItem.html', restaurants = restaurants, courses = courses)
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit/')
 def editMenuItem(restaurant_id, menu_id):
     # return "This page is for editing menu item %s" % menu_id
-    menu_item = None
-    menu_course = None
+    menu_item = menu_course = None
     for item in items:
         if item.get('id') == str(menu_id):
             menu_item = item
             menu_course = item['course']
 
-    courses = set(item.get('course') for item in items)
-    courses = list(courses) # converting the set to a list so we can sort it.
-    courses.sort()
-    print (courses)
-
+    courses = getCourses(items)
     return render_template('editMenuItem.html', menu = menu_item, menu_course = menu_course, courses = courses)
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete/')
