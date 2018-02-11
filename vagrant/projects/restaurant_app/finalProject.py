@@ -12,6 +12,15 @@ items = get_mock_menu_items_data()
 item = get_single_mock_menu_item_data()
 
 def getCourses(items):
+    """[summary]
+    
+    Arguments:
+        items {[list]} -- [A list of menu items dicts]
+    
+    Returns:
+        [list] -- [a list of unique ordered menu item courses]
+    """
+
     courses = set(item.get('course') for item in items) # we need a unique set of menu item courses
     courses = list(courses)  # converting the set to a list so we can sort it.
     courses.sort()
