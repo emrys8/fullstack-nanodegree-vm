@@ -25,6 +25,9 @@
               <ul>
                   {% for restaurant in restaurants %}
                     <li><a href="{{ url_for('showMenu', restaurant_id = restaurant.id ) }}">{{ restaurant.name }}</a></li>
+                    <a href="{{ url_for('editRestaurant', restaurant_id = restaurant.id) }}">Edit</a><br>
+                    <a href="{{ url_for('deleteRestaurant', restaurant_id = restaurant.id )}}">Delete</a><br>
+                    <br>
                   {% endfor %}
               </ul>
             {% else %}

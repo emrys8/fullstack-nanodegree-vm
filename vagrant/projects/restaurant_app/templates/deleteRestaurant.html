@@ -18,7 +18,7 @@
         <section>
             {% if restaurant %}
               <h2>Are you sure you want to delete {{ restaurant.name }}</h2>
-              <form action="">
+              <form action="{{ url_for('deleteRestaurant', restaurant_id = restaurant.id)}}" method="POST">
                   <div>
                       <button type="submit">Delete</button>
                   </div>
