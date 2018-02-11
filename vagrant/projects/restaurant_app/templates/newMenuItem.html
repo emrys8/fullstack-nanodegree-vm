@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>New Menu Item | Awexome Restaurant Keeper</title>
+    </head>
+    <body>
+        <h1>Awexome Restaurant Keeper</h1>
+
+        <nav>
+            <ul>
+                <li><a href="#">Restaurant</a></li>
+                <li><a href="#">Create Restaurant</a></li>
+            </ul>
+        </nav>
+
+        <section>
+            <h2>Make a New Menu Item</h2>
+            <!-- <form action="#">
+                <div>
+                    <label for="rest_name">Restaurant</label>
+                    <select name="restaurant" id="rest_name">
+                        {% if restaurants %}
+                          {% for restaurant in restaurants %}
+                            <option value="">{{ restaurant.name }}</option>
+                          {% endfor %}
+                        {% endif %}
+                    </select>
+                </div> -->
+
+                <div>
+                    <label for="menu_name">Name</label>
+                    <input type="text" id="menu_name" name="name" placeholder="Menu Item name">
+                </div>
+
+                <div>
+                    <label for="menu_price">Price</label>
+                    <input type="text" id="menu_price" name="price" placeholder="Menu item price">
+                </div>
+
+                <div>
+                    <label for="menu_course">Course</label>
+                    <input type="text" id="menu_course" name="course" placeholder="Menu Course">
+                </div>
+
+                <div>
+                    <label for="menu_desc">Description</label>
+                    <textarea style="width: 200px; height: 50px">Enter a short description of the menu item</textarea>
+                </div>
+
+                <div>
+                    <button type="submit">Create</button>
+                </div>
+            </form>
+        </section>
+    </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Edit Restaurant | Awexome Restaurant Keeper</title>
+        <meta charset="utf-8">
+    </head>
+    <body>
+        <h1>Awexome Restaurant Keeper</h1>
+
+        <nav>
+            <ul>
+                <li><a href="#">Restaurants</a></li>
+                <li><a href="#">Create Restaurant</a></li>
+                <li><a href="#">Create Menu Item</a></li>
+            </ul>
+        </nav>
+        
+        <section>
+
+            {% if restaurant %}
+              <h2>Edit {{ restaurant.name }}</h2>
+
+              
+              <form action="#">
+                  <div>
+                      <label for="name">Restaurant Name</label>
+                      <input type="text" id="name" name="name" placeholder={{ restaurant.name }}>
+                  </div>
+
+                  <div>
+                      <button type="submit">Save</button>
+                  </div>
+              </form>
+
+              <div>
+                  <a href="#">Cancel</a>
+              </div>
+
+              {% elif error %}
+                <p>{{ error }}</p>
+                <p><a href="{{ url_for('newRestaurant') }}">Make a New Restaurant</a></p>
+              {% endif %}
+        </section>
+    </body>
+</html>
+

@@ -1,0 +1,54 @@
+- draw mockups
+- routing
+- templates and forms
+- crud operations
+- api endpoints
+- styling and flash messages
+
+- mockups
+  - root page (all restaurant page)
+    * contents
+      - a list of restaurants
+      - a create restaurant button
+  
+  - a specific restaurant detail page
+    * contents
+      - restaurant name
+      - menu items details
+        - menu item name
+        - menu item description
+        - menu item price
+     - create new menu item button
+     - edit and delete buttons for each menu item
+
+  - a create restaurant page
+    * contents
+      - a form with a field named 'restaurant name' and an action button
+
+  - an edit restaurant page
+    * contents
+      - a pre-filled name field form with an action button
+
+  - a delete restaurant page
+    * contents
+      - a warning message with a delete action button
+  
+  
+  - a create menu item page
+    * contents
+      - a form with fields like 'price', 'name', 'course', 'menu description' and restaurant prefilled
+        fields
+      - an action button to create new menus
+    
+  - an edit menu item page
+    * contents
+      - prefilled fields form of all information required to edit a menu item
+      - an action button button to save edited data
+
+  - a delete menu item page
+    * contents
+      - a warning message with a delete action button
+
+
+==================== ADDING ROUTES ======================
+- adding routes

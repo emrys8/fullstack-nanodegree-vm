@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Menu | Awexome Restaurant Keeper</title>
+    </head>
+    <body>
+        <h1>Awexome Restaurant Keeper</h1>
+
+        <section>
+            <div>
+                {% if item %}
+                  <h3>{{ item['name'] }}</h3>
+                  <p>{{ item['price'] }}</p>
+                  <p>{{ item['course'] }}</p>
+                  <p>{{ item['description'] }}</p>
+                  
+                  <!-- buttons -->
+                  <a href="#">Edit</a>
+                  <a href="#">Delete</a>
+                {% else %}
+                  <p>There are no menu item for this restaurant</p>
+                {% endif %}
+            </div>
+        </section>
+    </body>
+</html>
