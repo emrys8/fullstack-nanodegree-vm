@@ -78,7 +78,20 @@ def newMenuItem(restaurant_id):
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit/')
 def editMenuItem(restaurant_id, menu_id):
-    return "This page is for editing menu item %s" % menu_id
+    # return "This page is for editing menu item %s" % menu_id
+    menu_item = None
+    menu_course = None
+    for item in items:
+        if item.get('id') == str(menu_id):
+            menu_item = item
+            menu_course = item['course']
+
+    courses = set(item.get('course') for item in items)
+    courses = list(courses) # converting the set to a list so we can sort it.
+    courses.sort()
+    print (courses)
+
+    return render_template('editMenuItem.html', menu = menu_item, menu_course = menu_course, courses = courses)
 
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete/')
 def deleteMenuItem(restaurant_id, menu_id):

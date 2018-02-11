@@ -15,7 +15,7 @@
         </nav>
 
         <section>
-            <h2>Edit {{ }}</h2>
+            <h2>Edit {{ menu.name }}</h2>
             <form>
                 <div>
                     <label for="menu_name">Name</label>
@@ -33,12 +33,12 @@
                     {% if courses %} 
                     {% for course in courses %}
                       <br>
-                      {% if course == {{ menu.course }} %}
+                      {% if course == menu_course %}
                         <!-- pre-select the course of this particular menu item -->
                         <input type="radio" id="menu_course" name="course" value={{ course }} checked> {{ course }}
+                      {% else %}
+                        <input type="radio" id="menu_course" name="course" value={{ course }}> {{ course }}
                       {% endif %}
-
-                        <input type="radio" id="menu_course" name="course" value={{ course }} checked> {{ course }}
                     {% endfor %} 
                     {% else %}
                       <input type="text" id="menu_course" name="course" placeholder="Menu Course"> 
