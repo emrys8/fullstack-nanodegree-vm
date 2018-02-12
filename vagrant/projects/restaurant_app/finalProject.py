@@ -61,9 +61,8 @@ def deleteRestaurant(restaurant_id):
 
 @app.route('/restaurants/search', methods=['POST'])
 def findRestaurant():
-    restaurant = session.query(Restaurant).filter_by(name = request.form['name']).one()
+    restaurant = session.query(Restaurant).filter_by(name = request.form['q']).one()
     return redirect(url_for('showMenu', restaurant_id = restaurant.id))
-
 
 @app.route('/restaurant/<int:restaurant_id>/')
 @app.route('/restaurant/<int:restaurant_id>/menu/')
