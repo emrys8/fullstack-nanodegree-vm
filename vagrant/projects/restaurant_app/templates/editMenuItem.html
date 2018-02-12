@@ -9,8 +9,15 @@
 
         <nav>
             <ul>
-                <li><a href="#">Restaurant</a></li>
-                <li><a href="#">Create Restaurant</a></li>
+                <li>
+                    <a href="{{ url_for('showRestaurants')}}">Restaurant</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('newRestaurant')}}">Create Restaurant</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('newMenuItem', restaurant_id = restaurant.id)}}">Create Menu Item</a>
+                </li>
             </ul>
         </nav>
 
