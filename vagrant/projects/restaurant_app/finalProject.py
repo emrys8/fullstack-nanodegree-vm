@@ -1,4 +1,4 @@
-from flask import Flask, request, url_for, redirect, render_template
+from flask import Flask, request, url_for, redirect, render_template, jsonify
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
@@ -59,9 +59,9 @@ def deleteRestaurant(restaurant_id):
     else:
         return render_template('deleteRestaurant.html', restaurant = restaurant)
 
-@app.route('/restaurants/search', methods=['POST'])
+@app.route('/restaurants/search', methods=['GET'])
 def findRestaurant():
-    restaurant = session.query(Restaurant).filter_by(name = request.form['q']).one()
+    restaurant = session.query(Restaurant).filter_by(name = request.args.to_dict()['q']).one()
     return redirect(url_for('showMenu', restaurant_id = restaurant.id))
 
     # will add better and more robust search functionality
