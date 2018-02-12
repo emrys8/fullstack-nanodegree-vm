@@ -16,18 +16,7 @@
 
         <section>
             <h2>Make a New Menu Item</h2>
-            <!-- <form action="#">
-                <div>
-                    <label for="rest_name">Restaurant</label>
-                    <select name="restaurant" id="rest_name">
-                        {% if restaurants %}
-                          {% for restaurant in restaurants %}
-                            <option value="">{{ restaurant.name }}</option>
-                          {% endfor %}
-                        {% endif %}
-                    </select>
-                </div> -->
-
+            <form method="POST" action="{{ url_for('newMenuItem', restaurant_id = restaurant.id )}}">
                 <div>
                     <label for="menu_name">Name</label>
                     <input type="text" id="menu_name" name="name" placeholder="Menu Item name">
@@ -43,7 +32,7 @@
                     {% if courses %}
                       {% for course in courses %}
                        <br>
-                       <input type="radio" id="menu_course" name="course" value={{ course }}> {{ course }}
+                       <input type="radio" id="menu_course" name="course" value="{{ course }}"> {{ course }}
                       {% endfor %}
                     {% else %}
                        <input type="text" id="menu_course" name="course" placeholder="Menu Course">
@@ -52,7 +41,7 @@
 
                 <div>
                     <label for="menu_desc">Description</label>
-                    <textarea style="width: 200px; height: 50px">Enter a short description of the menu item</textarea>
+                    <textarea style="width: 200px; height: 50px" name="description">Enter a short description of the menu item</textarea>
                 </div>
 
                 <div>

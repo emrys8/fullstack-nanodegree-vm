@@ -9,15 +9,19 @@
 
         <section>
             <div>
-                {% if item %}
-                  <h3>{{ item['name'] }}</h3>
-                  <p>{{ item['price'] }}</p>
-                  <p>{{ item['course'] }}</p>
-                  <p>{{ item['description'] }}</p>
-                  
-                  <!-- buttons -->
-                  <a href="#">Edit</a>
-                  <a href="#">Delete</a>
+
+                <h2>{{ restaurant.name }}</h2>
+                {% if items %}
+                  {% for item in items %}
+                    <h3>{{ item.name }}</h3>
+                    <p>{{ item.price }}</p>
+                    <p>{{ item.course }}</p>
+                    <p>{{ item.description }}</p>
+
+                    <!-- buttons -->
+                    <a href="#">Edit</a>
+                    <a href="#">Delete</a>
+                  {% endfor %}
                 {% else %}
                   <p>There are no menu item for this restaurant</p>
                 {% endif %}
