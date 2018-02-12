@@ -13,6 +13,13 @@ class Restaurant(Base):
     id = Column(Integer, primary_key=True)
     name = Column(Integer, nullable=True)
 
+    @property
+    def serialize(self):
+        return {
+            'id': self.id,
+            'name': self.name
+        }
+
 
 class MenuItem(Base):
     __tablename__ = 'menu_item'
@@ -24,6 +31,18 @@ class MenuItem(Base):
     price = Column(String(8))
     restaurant_id = Column(Integer, ForeignKey('restaurant.id'))
     restaurant = relationship(Restaurant)
+
+    @property
+    def serialize(self):
+        # Returns the instance data in an easily serializable format
+        return {
+            'name': self.name,
+            'price': self.price,
+            'description': self.description,
+            'id': self.id,
+            'course': self.course
+        }
+
 
 
 engine = create_engine('sqlite:///restaurant_menu.db')

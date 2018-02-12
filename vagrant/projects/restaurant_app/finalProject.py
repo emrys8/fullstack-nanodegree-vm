@@ -19,6 +19,35 @@ def getCourses():
     courses.sort()
     return courses
 
+# Making an API endpoint
+@app.route('/restaurants/JSON')
+def restaurantJSON():
+    restaurants = session.query(Restaurant).all()
+    return jsonify(Restaurants = [r.serialize for r in restaurants])
+
+@app.route('/restaurant/<int:restaurant_id>/JSON')
+def restaurantDetailJSON(restaurant_id):
+    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+    return jsonify(Restaurant = [restaurant.serialize])
+
+@app.route('/restaurant/<int:restaurant_id>/menu/JSON')
+def restaurantMenuJSON(restaurant_id):
+    restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+    items = session.query(MenuItem).filter_by(restaurant_id = restaurant.id).all()
+    return jsonify(MenuItems = [i.serialize for i in items])
+
+@app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/JSON')
+def restaurantMenuDetailJSON(restaurant_id, menu_id):
+    try:
+        restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
+    except Exception:
+        print ()
+    finally:
+        return jsonify({ 'message': 'restaurant with the id does not exist', 'success': False })
+    
+    item = session.query(MenuItem).filter_by(restaurant_id = restaurant.id, id = menu_id).one()
+    return jsonify(Menu = [item.serialize])
+
 @app.route('/')
 @app.route('/restaurants/')
 def showRestaurants():
