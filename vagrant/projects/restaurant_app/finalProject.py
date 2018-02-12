@@ -59,6 +59,11 @@ def deleteRestaurant(restaurant_id):
     else:
         return render_template('deleteRestaurant.html', restaurant = restaurant)
 
+@app.route('/restaurants/search', methods=['POST'])
+def findRestaurant(restaurant_id):
+    restaurant = session.query(Restaurant).filter_by(name = request.form['name']).one()
+    pass
+
 
 @app.route('/restaurant/<int:restaurant_id>/')
 @app.route('/restaurant/<int:restaurant_id>/menu/')
@@ -92,16 +97,13 @@ def editMenuItem(restaurant_id, menu_id):
     menu_item = session.query(MenuItem).filter_by(restaurant_id = restaurant.id, id = menu_id).one()
     
     if request.method == 'POST':
-        if menu_item:
-            menu_item.name = request.form['name']
-            menu_item.price = request.form['price']
-            menu_item.course = request.form['course']
-            menu_item.description = request.form['description']
-            session.add(menu_item)
-            session.commit()
-        else:
-            pass
-        return redirect(url_for('showMenu', restaurant_id = restaurant_id))
+        menu_item.name = request.form['name']
+        menu_item.price = request.form['price']
+        menu_item.course = request.form['course']
+        menu_item.description = request.form['description']
+        session.add(menu_item)
+        session.commit()
+        return redirect(url_for('showMenu', restaurant_id=restaurant_id))
     else:
         courses = getCourses()
         return render_template('editMenuItem.html', menu = menu_item, menu_course = menu_item.course, courses = courses, restaurant = restaurant)
@@ -113,12 +115,9 @@ def deleteMenuItem(restaurant_id, menu_id):
     menu_item = session.query(MenuItem).filter_by(restaurant_id = restaurant.id, id = menu_id).one()
 
     if request.method == 'POST':
-        if menu_item:
-            session.delete(menu_item)
-            session.commit()
-            return redirect(url_for('showMenu', restaurant_id = restaurant_id))
-        else:
-            pass
+        session.delete(menu_item)
+        session.commit()
+        return redirect(url_for('showMenu', restaurant_id = restaurant_id))
     else:
         return render_template('deleteMenuItem.html', menu=menu_item, restaurant = restaurant)
 
