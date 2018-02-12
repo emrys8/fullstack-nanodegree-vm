@@ -60,9 +60,9 @@ def deleteRestaurant(restaurant_id):
         return render_template('deleteRestaurant.html', restaurant = restaurant)
 
 @app.route('/restaurants/search', methods=['POST'])
-def findRestaurant(restaurant_id):
+def findRestaurant():
     restaurant = session.query(Restaurant).filter_by(name = request.form['name']).one()
-    pass
+    return redirect(url_for('showMenu', restaurant_id = restaurant.id))
 
 
 @app.route('/restaurant/<int:restaurant_id>/')
