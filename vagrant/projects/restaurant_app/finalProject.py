@@ -64,6 +64,8 @@ def findRestaurant():
     restaurant = session.query(Restaurant).filter_by(name = request.form['q']).one()
     return redirect(url_for('showMenu', restaurant_id = restaurant.id))
 
+    # will add better and more robust search functionality
+
 @app.route('/restaurant/<int:restaurant_id>/')
 @app.route('/restaurant/<int:restaurant_id>/menu/')
 def showMenu(restaurant_id):
