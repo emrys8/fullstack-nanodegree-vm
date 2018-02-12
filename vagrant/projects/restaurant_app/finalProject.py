@@ -89,7 +89,7 @@ def newMenuItem(restaurant_id):
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/edit/', methods=['GET', 'POST'])
 def editMenuItem(restaurant_id, menu_id):
     restaurant = session.query(Restaurant).filter_by(id = restaurant_id).one()
-    menu_item = session.query(Restaurant).filter_by(restaurant_id = restaurant.id, id = menu_id).one()
+    menu_item = session.query(MenuItem).filter_by(restaurant_id = restaurant.id, id = menu_id).one()
     
     if request.method == 'POST':
         if menu_item:

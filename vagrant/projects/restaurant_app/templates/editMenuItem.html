@@ -16,10 +16,10 @@
 
         <section>
             <h2>Edit {{ menu.name }}</h2>
-            <form>
+            <form action="{{ url_for('editMenuItem', restaurant_id = menu.restaurant_id, menu_id = menu.id ) }}" method="POST">
                 <div>
                     <label for="menu_name">Name</label>
-                    <input type="text" id="menu_name" name="name" placeholder="Menu Item name" value={{ menu.name }}>
+                    <input type="text" id="menu_name" name="name" placeholder="Menu Item name" value="{{ menu.name }}">
                 </div>
                 
                 <div>
@@ -47,12 +47,12 @@
                 
                 <div>
                     <label for="menu_desc">Description</label>
-                    <textarea style="width: 200px; height: 50px">{{ menu.description }}</textarea>
+                    <textarea style="width: 200px; height: 50px" name = "description">{{ menu.description }}</textarea>
                 </div>
                 
                 <div>
                     <button type="submit">Edit</button>
-                    <a href="#">Cancel</a>
+                    <a href="{{ url_for('showMenu', restaurant_id = menu.restaurant_id) }}">Cancel</a>
                 </div>
             </form>
         </section>
