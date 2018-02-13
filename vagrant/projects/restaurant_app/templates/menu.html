@@ -28,14 +28,18 @@
 
                 {% if items %}
                   {% for item in items %}
+                    <div class="restaurant-cl" id="positioned">
                     <h3>{{ item.name }}</h3>
-                    <p>{{ item.price }}</p>
+                    <p class="price-right">${{ item.price }}</p>
                     <p>{{ item.course }}</p>
                     <p>{{ item.description }}</p>
 
                     <!-- buttons -->
-                    <a href="{{ url_for('editMenuItem', restaurant_id = restaurant.id, menu_id = item.id) }}">Edit</a>
-                    <a href="{{ url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id = item.id) }}">Delete</a>
+                    <div id="action-buttons">
+                        <a href="{{ url_for('editMenuItem', restaurant_id = restaurant.id, menu_id = item.id) }}" class="rest-link">Edit</a>
+                        <a href="{{ url_for('deleteMenuItem', restaurant_id = restaurant.id, menu_id = item.id) }}" class="rest-link">Delete</a>
+                    </div>
+                    </div>
                   {% endfor %}
                 {% else %}
                   <p>There are no menu item for this restaurant</p>

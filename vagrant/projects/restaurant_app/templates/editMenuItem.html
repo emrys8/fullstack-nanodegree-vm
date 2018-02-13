@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Edit Menu Item | Awexome Restaurant Keeper</title>
+        <link rel='stylesheet' href="{{ url_for('static', filename='styles.css') }}">
     </head>
     <body>
         <h1>Awexome Restaurant Keeper</h1>
@@ -26,13 +27,13 @@
             <form action="{{ url_for('editMenuItem', restaurant_id = menu.restaurant_id, menu_id = menu.id ) }}" method="POST">
                 <div>
                     <label for="menu_name">Name</label>
-                    <input type="text" id="menu_name" name="name" placeholder="Menu Item name" value="{{ menu.name }}">
+                    <input type="text" id="menu_name" name="name" placeholder="Menu Item name" value="{{ menu.name }}" required>
                 </div>
                 
                 <div>
                     <label for="menu_price">Price</label>
                     <input type="text" id="menu_price" name="price" placeholder="Menu item price" 
-                    value={{ menu.price }}>
+                    value={{ menu.price }} required>
                 </div>
                 
                 <div>
@@ -54,13 +55,14 @@
                 
                 <div>
                     <label for="menu_desc">Description</label>
-                    <textarea style="width: 200px; height: 50px" name = "description">{{ menu.description }}</textarea>
+                    <textarea name = "description">{{ menu.description }}</textarea>
                 </div>
                 
-                <div>
+                <div class="action-btn">
                     <button type="submit">Edit</button>
-                    <a href="{{ url_for('showMenu', restaurant_id = menu.restaurant_id) }}">Cancel</a>
                 </div>
+
+                <a href="{{ url_for('showMenu', restaurant_id = menu.restaurant_id) }}">Cancel</a>
             </form>
         </section>
     </body>
