@@ -3,17 +3,15 @@
     <head>
         <title>Restaurants | Awexome Restaurant Keeper</title>
         <meta charset="utf-8">
+        <link rel='stylesheet' href="{{ url_for('static', filename='styles.css') }}">
     </head>
     <body>
         <h1>Awexome Restaurant Keeper</h1>
         
-        <section class="form-div">
-            <form action="{{ url_for('findRestaurant')}}" method="GET">
+        <section>
+            <form action="{{ url_for('findRestaurant')}}" method="GET" id="search-form">
                 <div>
                     <input type="search" spellcheck="false" name="q" placeholder="Search Restaurants">
-                </div>
-
-                <div>
                     <button type="submit">Search</button>
                 </div>
             </form>
@@ -24,10 +22,11 @@
             {% if restaurants %}
               <ul>
                   {% for restaurant in restaurants %}
-                    <li><a href="{{ url_for('showMenu', restaurant_id = restaurant.id ) }}">{{ restaurant.name }}</a></li>
-                    <a href="{{ url_for('editRestaurant', restaurant_id = restaurant.id) }}">Edit</a><br>
-                    <a href="{{ url_for('deleteRestaurant', restaurant_id = restaurant.id )}}">Delete</a><br>
-                    <br>
+                    <div class="restaurant-cl">
+                        <li><a href="{{ url_for('showMenu', restaurant_id = restaurant.id ) }}">{{ restaurant.name }}</a></li>
+                        <a href="{{ url_for('editRestaurant', restaurant_id = restaurant.id) }}" class = "rest-link">Edit</a>
+                        <a href="{{ url_for('deleteRestaurant', restaurant_id = restaurant.id )}}" class="rest-link">Delete</a>
+                    </div>
                   {% endfor %}
               </ul>
             {% else %}

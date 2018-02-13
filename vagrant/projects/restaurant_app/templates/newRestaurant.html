@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Create New Restaurant | Awexome Restaurant Keeper</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
     </head>
     <body>
         <h1>Awexome Restaurant Keeper</h1>
@@ -11,13 +12,10 @@
                 <li>
                     <a href="{{ url_for('showRestaurants')}}">Restaurant</a>
                 </li>
-                <li>
-                    <a href="{{ url_for('newRestaurant')}}">Create Restaurant</a>
-                </li>
             </ul>
         </nav>
         <section>
-            <h2>Make a New Restaurant</h2>
+            <h2 id="left-aligned-heading">Make a New Restaurant</h2>
             <div>
                 <form action="{{ url_for('newRestaurant')}}" method="POST">
                     <div>
