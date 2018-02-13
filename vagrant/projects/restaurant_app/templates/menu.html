@@ -24,6 +24,14 @@
 
         <section>
             <div>
+
+                {% with messages = get_flashed_messages() %}
+                  {% if messages %}
+                    {% for message in messages %}
+                      <p style="text-align: center" class="flashed-message">{{ message }}</p>
+                    {% endfor %}
+                  {% endif %}
+                {% endwith %}
                 <h2>{{ restaurant.name }}</h2>
 
                 {% if items %}

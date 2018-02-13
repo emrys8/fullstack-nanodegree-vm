@@ -83,6 +83,7 @@ def editRestaurant(restaurant_id):
         restaurant.name = request.form['name']
         session.add(restaurant)
         session.commit()
+        flash('Restaurant was successfully edited')
         return redirect(url_for('showRestaurants'))
     else:
         return render_template('editRestaurant.html', restaurant = restaurant)
@@ -94,6 +95,7 @@ def deleteRestaurant(restaurant_id):
     if request.method == 'POST':
         session.delete(restaurant)
         session.commit()
+        flash('Restaurant was successfully deleted')
         return redirect(url_for('showRestaurants'))
     else:
         return render_template('deleteRestaurant.html', restaurant = restaurant)
@@ -126,6 +128,7 @@ def newMenuItem(restaurant_id):
                                 restaurant_id = restaurant_id)
         session.add(new_menu_item)
         session.commit()
+        flash("New Menu Item created successfully")
         return redirect(url_for('showMenu', restaurant_id = restaurant_id))
     else:
         courses = getCourses()
@@ -143,6 +146,7 @@ def editMenuItem(restaurant_id, menu_id):
         menu_item.description = request.form['description']
         session.add(menu_item)
         session.commit()
+        flash("Menu Item edited successfully")
         return redirect(url_for('showMenu', restaurant_id=restaurant_id))
     else:
         courses = getCourses()
@@ -157,6 +161,7 @@ def deleteMenuItem(restaurant_id, menu_id):
     if request.method == 'POST':
         session.delete(menu_item)
         session.commit()
+        flash('Menu Item deleted successfully')
         return redirect(url_for('showMenu', restaurant_id = restaurant_id))
     else:
         return render_template('deleteMenuItem.html', menu=menu_item, restaurant = restaurant)

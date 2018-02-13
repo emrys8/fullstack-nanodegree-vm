@@ -8,7 +8,6 @@
 
 /* typography */
 html {
-    /* font-family: 'Roboto', sans-serif; */
     font-family: 'Crete Round', serif;
 }
 
@@ -211,4 +210,9 @@ textarea {
 
 #description-para {
     width: 70%;
+}
+
+.flashed-messages {
+    text-align: center;
+    color: #750114;
 }
