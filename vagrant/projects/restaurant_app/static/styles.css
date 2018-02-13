@@ -39,7 +39,9 @@ a:link, a:visited {
 
 /* navbar */
 nav {
-    width: 100%;
+    width: 80%;
+    text-align: center;
+    margin: 0 auto 60px;
 }
 
 nav ul {
@@ -53,10 +55,16 @@ nav ul li {
 
 nav ul li a {
     display: inline-block;
-    width: 200px;
-    padding: 0.5rem 0;
+    padding: 0 0.5rem;
 }
 
+nav ul li a:last-of-type {
+    border-right: none;
+}
+
+nav ul li a:hover {
+    border-bottom: 1px solid;
+}
 .restaurant-cl {
    width: 500px;
    border: 1px solid;
@@ -88,7 +96,6 @@ a.rest-link:hover {
 #search-form {
     margin: 60px auto 100px;
     text-align: center;
-    border: none;
 }
 
 section + div {
@@ -185,4 +192,22 @@ textarea {
 
 .no-border-form {
     border: none;
+}
+
+#delete-button {
+    margin: 0 auto;
+    text-align: center;
+}
+
+#delete-button button {
+    width: 50%;
+}
+
+#delete-button + div, .action-btn + div {
+    margin: 20px auto 0;
+    text-align: center;
+}
+
+#description-para {
+    width: 70%;
 }

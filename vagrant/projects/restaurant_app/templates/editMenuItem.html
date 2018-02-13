@@ -62,7 +62,9 @@
                     <button type="submit">Edit</button>
                 </div>
 
-                <a href="{{ url_for('showMenu', restaurant_id = menu.restaurant_id) }}">Cancel</a>
+                <div>
+                    <a href="{{ url_for('showMenu', restaurant_id = menu.restaurant_id) }}">Cancel</a>
+                </div>
             </form>
         </section>
     </body>

@@ -18,11 +18,14 @@
 
         <section>
             {% if restaurant %}
-              <h2>Are you sure you want to delete {{ restaurant.name }}</h2>
+              <h2 class="centered">Are you sure you want to delete {{ restaurant.name }}?</h2>
               <form action="{{ url_for('deleteRestaurant', restaurant_id = restaurant.id)}}" method="POST" class="no-border-form">
-                  <div>
+                  <div id="delete-button">
                       <button type="submit">Delete</button>
-                      <a href="#">Cancel</a>
+                  </div>
+
+                  <div>
+                    <a href="{{ url_for('showRestaurants')}}">Cancel</a>
                   </div>
               </form>
               <!--<div>

@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Edit Menu Item | Awexome Restaurant Keeper</title>
+        <link rel='stylesheet' href="{{ url_for('static', filename='styles.css') }}">
     </head>
     <body>
         <h1>Awexome Restaurant Keeper</h1>
@@ -22,14 +23,17 @@
         </nav>
 
         <section>
-            <h3>Are you sure you want to delete {{ menu.name }}</h3>
+            <h2>Are you sure you want to delete {{ menu.name }}?</h2>
 
-            <form action="{{ url_for('deleteMenuItem', restaurant_id = menu.restaurant_id, menu_id = menu.id )}}" method="POST">
+            <form action="{{ url_for('deleteMenuItem', restaurant_id = menu.restaurant_id, menu_id = menu.id )}}" method="POST" class="no-border-form">
+                <div id="delete-button">
                 <button type="submit">Delete</button>
+                </div>
+
+                <div>
+                    <a href="{{ url_for('showMenu', restaurant_id = menu.restaurant_id) }}">Cancel</a>
+                </div>
             </form>
-            <div>
-                <a href="{{ url_for('showMenu', restaurant_id = menu.restaurant_id) }}">Cancel</a>
-            </div>
         </section>
     </body>
 </html>
