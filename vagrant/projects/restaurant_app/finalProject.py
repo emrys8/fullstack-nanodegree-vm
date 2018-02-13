@@ -62,10 +62,14 @@ def showRestaurants():
 @app.route('/restaurant/new/', methods=['GET', 'POST'])
 def newRestaurant():
     if (request.method == 'POST'):
-        newRestaurant = Restaurant(name = request.form['name'])
-        session.add(newRestaurant)
-        session.commit()
-        return redirect(url_for('showRestaurants'))
+        if (request.form['name'] == ''):
+            # user enters no restaurant name, redirect back to 'showRestaurants' page
+            return redirect(url_for('showRestaurants'))
+        else:
+            newRestaurant = Restaurant(name = request.form['name'])
+            session.add(newRestaurant)
+            session.commit()
+            return redirect(url_for('showRestaurants'))
     else:
         return render_template('newRestaurant.html')
 
