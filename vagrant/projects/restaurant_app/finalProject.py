@@ -1,4 +1,4 @@
-from flask import Flask, request, url_for, redirect, render_template, jsonify
+from flask import Flask, request, url_for, redirect, render_template, jsonify, flash
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 
@@ -12,6 +12,7 @@ DBSession = sessionmaker(bind=engine)
 session = DBSession()
 
 app = Flask(__name__)
+app.secret_key = 'secret_key'
 
 def getCourses():
     courses = set(['Entree', 'Dessert', 'Appetizer', 'Entree', 'Beverages'])
@@ -69,6 +70,7 @@ def newRestaurant():
             newRestaurant = Restaurant(name = request.form['name'])
             session.add(newRestaurant)
             session.commit()
+            flash('New Restaurant created successfully')
             return redirect(url_for('showRestaurants'))
     else:
         return render_template('newRestaurant.html')

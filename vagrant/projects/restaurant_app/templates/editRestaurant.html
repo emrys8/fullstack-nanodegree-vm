@@ -3,6 +3,7 @@
     <head>
         <title>Edit Restaurant | Awexome Restaurant Keeper</title>
         <meta charset="utf-8">
+        <link rel='stylesheet' href="{{ url_for('static', filename='styles.css') }}">
     </head>
     <body>
         <h1>Awexome Restaurant Keeper</h1>
@@ -36,11 +37,12 @@
                   <div>
                       <button type="submit">Save</button>
                   </div>
-              </form>
 
-              <div>
-                  <a href="{{ url_for('showRestaurants')}}">Cancel</a>
-              </div>
+                <div>
+                    <a href="{{ url_for('showRestaurants')}}">Cancel</a>
+                </div>
+                
+              </form>
 
               {% else %}
                 <p>No such restaurant</p>

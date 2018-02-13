@@ -65,6 +65,7 @@ nav ul li a:last-of-type {
 nav ul li a:hover {
     border-bottom: 1px solid;
 }
+
 .restaurant-cl {
    width: 500px;
    border: 1px solid;
@@ -94,7 +95,7 @@ a.rest-link:hover {
 }
 
 #search-form {
-    margin: 60px auto 100px;
+    margin: 60px auto 60px;
     text-align: center;
 }
 
@@ -114,10 +115,10 @@ section + div a:hover {
     color: #fff;
 }
 
-
 /* form styling */
 form {
     border: 1px solid;
+    border-radius: 5px;
     width: 500px;
     padding: 2rem;
     margin: 0 auto;
